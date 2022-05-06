@@ -1,0 +1,64 @@
+%! Author = mscherbela
+%! Date = 06.05.22
+
+% Preamble
+\documentclass[11pt]{article}
+
+% Packages
+\usepackage{amsmath}
+\usepackage{xcolor}
+\usepackage[margin=3cm]{geometry}
+\usepackage{parskip}
+
+\renewcommand{\vec}[1]{{\boldsymbol{#1}}}
+\newcommand{\pdiff}[2]{{\frac{\partial {#1}}{\partial {#2}}}}
+\newcommand{\commentms}[1]{{\color{red}#1}}
+
+% Document
+\begin{document}
+    \section{Solving the Navier-Stokes equation}
+
+    \subsection{Simplifications}
+    Throughout this document we use the following notation: $r$, $\varphi$ denote polar coordinates, bold-face symbols $\vec{x}$ denote vectors.
+
+    Starting from the full Navier-Stokes equation for an uncompressible fluid
+    \begin{equation*}
+    \pdiff{\vec{v}}{t} + (\vec{v} \nabla \vec{v}) - \nu \nabla^2 \vec{v} = -\frac{1}{\rho} \nabla p + \vec{g},
+    \end{equation*}
+    we neglect the following terms:
+    \begin{itemize}
+        \item $\pdiff{\vec{v}}{t} = 0$, because we consider stationary solutions
+        \item $(\vec{v} \nabla \vec{v}) \approx 0$, because we consider regimes of low Reynolds numbers \commentms{TODO: Need to justify better}
+        \item $p \approx 0$ and thus $\nabla p \approx \vec{0}$, because we apply no external pressure \commentms{TODO: Justify better}
+    \end{itemize}
+    This substantially simplifies the Navier-Stokes equation to the Laplace equation
+    \begin{equation*}
+        \nabla^2 \vec{v} = -\frac{1}{\nu} \vec{g}
+    \end{equation*}
+    We furthermore assume that there is no flow along the rod (i.e. the problem is treated two-dimensionally) and that there is also no radial flow.
+    This leads to $\vec{v} = v \vec{e}_\varphi$, i.e. the flow is only in tangential direction.
+    Note that assuming a purely tangential flow, continuity (i.e. conservation of flow) and a $\varphi$-dependent shape are inconsistent: If there is only tangential flow, how can a pocket of honey that is "sticking out" be stationary?
+    The answer is that there is a small radial flow that ensures continuitiy, but we assume it to be so small that it is irrelevant for the fluid-dynamics.
+    Instead of enforcing continuity at every point in space, we only assume continuity along $\varphi$ for the flow $\Phi$:
+    \begin{equation*}
+        \Phi = \int_{r_0}^{R(\varphi)} v(r, \varphi) dr = const.
+    \end{equation*}
+
+
+    \subsection{Problem statement}
+    We thus need to solve these equations:
+    \begin{align}
+        &\nabla^2 \vec{v} = -\frac{1}{\nu} \vec{g} \qquad &\text{Navier-Stokes}\\
+        &v(r_0, \varphi) = v_0 = \omega r_0 \qquad &\text{Inner boundary condition: No-slip}\\
+        &\pdiff{v(r,\varphi)}{\varphi}|_{r=R(\varphi)} = 0 \qquad &\text{Outer boundary: No shear forces}\\
+        &\Phi = \int_{r_0}^{R(\varphi)} v(r, \varphi) dr = const. \qquad &\text{Continuity} \\
+        &A = \int_0^{2\pi} \left( R(\varphi)^2 - r_0^2 \right) d\varphi \qquad &\text{Amount of honey}
+    \end{align}
+
+    The problem can be broken down into two sub-problems:
+    \begin{enumerate}
+        \item Given an inner radius $r_0$, and a $\varphi$-dependent outer radius $R(\varphi)$: What is the resulting flow-profile $v(r, \varphi)$ that satisfies the (simplified) Navier-Stokes equation and the boundary conditions (first 3 equations)?
+        \item What outer shape $R(\varphi)$ (and with it the resulting flow-profile $v(r, \varphi)$) satisfies the continuity condition and contains a given amount of honey (last 2 equations)?
+    \end{enumerate}
+
+    \end{document}

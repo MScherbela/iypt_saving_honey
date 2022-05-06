@@ -29,7 +29,7 @@ def get_flow(phi, v0, r0, nu, R):
     A = A0*(X**2-1)/2 + B0*np.log(X)
     B = A1 * (X**(1+s2)-1) / (1+s2) + B1 * (X**(1-s2)-1) / (1-s2) - (X**3-1)/3
     v_tilde = (g*r0**2)/(2*nu)
-    return v0 * A - B * v_tilde * np.cos(phi)
+    return (v0 * A - B * v_tilde * np.cos(phi)) * r0
 
 
 def _flow_root_func(x, phi, v0, r0, nu, R0):
